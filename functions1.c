@@ -14,7 +14,7 @@ int print_unsigned(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
-	unsigned long int num = va_arf(types, unsigned long int);
+	unsigned long int num = va_arg(types, unsigned long int);
 
 	num = convert_size_unsgnd(num, size);
 
@@ -66,7 +66,7 @@ int print_octal(va_list types, char buffer[],
 		buffer[i--] = '0';
 	i++;
 
-	return (write_unsgnd(o, i, buffer, flags, width, precision, size));
+	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
 /*** PRINT UNSIGNED NUMBER IN HEXADEMICAL***/
 /**
@@ -82,7 +82,7 @@ int print_octal(va_list types, char buffer[],
 int print_hexademical(va_list types, char buffer[],
 		int flags, int width, int precision, int size)
 {
-	return (print_hexa(types, "0123456789abcdef" buffer,
+	return (print_hexa(types, "0123456789abcdef", buffer,
 				flags, 'x', width, precision, size));
 }
 /**** PRINT UNSIGNED NUMBER IN UPPER HEXADECIMAL ***/
@@ -104,7 +104,7 @@ int print_hexa_upper(va_list types, char buffer[],
 }
 /**** PRINT HEXX NUM IN LOWER OR UPPER ****/
 /**
- * @print_hexa - prints a hexadecimal number in lower or upper
+ * print_hexa - prints a hexadecimal number in lower or upper
  * @types: List of arguments
  * @map_to: Array of values to map the number to
  * @buffer: buffer array to handle print
@@ -121,16 +121,16 @@ int print_hexa(va_list types, char map_to[], char buffer[],
 {
 	int i = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
-	unsigned long int init_num - num;
+	unsigned long int init_num = num;
 
-	UNUSED(widtth);
+	UNUSED(width);
 
-	num = convert_size_unsignd(num, size);
+	num = convert_size_unsgnd(num, size);
 
 	if (num == 0)
 		buffer[i--] = '0';
 
-	buffer[BUFF_SiZE - 1] = '\0';
+	buffer[BUFF_SIZE - 1] = '\0';
 
 	while (num > 0)
 	{
